@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  webserver:
+    build: .
+    ports:
+      - '80:80'
+    volumes:
+      - ./:/var/www/html
+      - ./httpd.conf:/etc/httpd/sites-available/000-default.conf
+  db:
+    image: mysql:5.7
+    volumes:
+      - "./.data/db:/var/lib/mysql"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel_db
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+    ports:
+      - "3306:3306"
